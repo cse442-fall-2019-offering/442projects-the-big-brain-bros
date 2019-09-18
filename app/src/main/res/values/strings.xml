@@ -14,4 +14,6 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="search">Search</string>
+    <string name="search_hint" />
+    <string name="app_label" />
 </resources>

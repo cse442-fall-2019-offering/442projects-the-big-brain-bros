@@ -1,5 +1,6 @@
 package com.example.a442projects_the_big_brain_bros;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -22,6 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.SearchView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onSearchSelect(View view){
+        ///
+        onSearchRequested();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -70,4 +80,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
