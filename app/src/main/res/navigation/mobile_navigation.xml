@@ -39,5 +39,19 @@
         android:id="@+id/nav_send"
         android:name="com.example.a442projects_the_big_brain_bros.ui.send.SendFragment"
         android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        tools:layout="@layout/activity_login" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.a442projects_the_big_brain_bros.ui.send.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/activity_login" />
+
+    <fragment
+        android:id="@+id/nav_signup"
+        android:name="com.example.a442projects_the_big_brain_bros.ui.send.RegisterFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/activity_register" />
+
+
 </navigation>
