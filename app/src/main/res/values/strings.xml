@@ -16,4 +16,5 @@
     <string name="search">Search</string>
     <string name="search_hint" />
     <string name="app_label" />
+    <string name="login">Login</string>
 </resources>
