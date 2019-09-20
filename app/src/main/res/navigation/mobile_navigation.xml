@@ -14,25 +14,25 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.a442projects_the_big_brain_bros.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/Favorites"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.a442projects_the_big_brain_bros.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/Historyt"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_tools"
         android:name="com.example.a442projects_the_big_brain_bros.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/Search"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
         android:id="@+id/nav_share"
         android:name="com.example.a442projects_the_big_brain_bros.ui.share.ShareFragment"
-        android:label="@string/menu_share"
+        android:label="@string/logout"
         tools:layout="@layout/fragment_share" />
 
     <fragment
