@@ -1,6 +1,7 @@
 package com.example.a442projects_the_big_brain_bros;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.a442projects_the_big_brain_bros.ui.send.LoginFragment;
@@ -9,6 +10,7 @@ import com.example.a442projects_the_big_brain_bros.ui.send.SendFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -82,9 +84,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onSearchSelect(View view){
-        ///
-        onSearchRequested();
+//        onSearchRequested();
+        Intent intent= new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
