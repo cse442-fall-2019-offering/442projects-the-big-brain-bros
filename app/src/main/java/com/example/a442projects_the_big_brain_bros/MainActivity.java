@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onSearchSelect(View view){
-//        onSearchRequested();
         Intent intent= new Intent(this, SearchActivity.class);
-        startActivity(intent);
+//        startActivity(intent);
+        onSearchRequested();
     }
 
 

@@ -14,9 +14,8 @@ public class SearchableActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
-
-        Intent intent = getIntent();
-        handleIntent(intent);
+//        Intent intent = getIntent();
+//        handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
@@ -28,9 +27,11 @@ public class SearchableActivity extends Activity {
     }
 
     private void doMySearch(String query) {
-//        if(!query.isEmpty()) {
-//            Intent intent = new Intent(this, RecipeList.class);
-//            startActivity(intent);
-//        }
+        if(!query.isEmpty()) {
+            Intent intent = new Intent(this, RecipeList.class);
+            startActivity(intent);
+        }
     }
+
+
 }
