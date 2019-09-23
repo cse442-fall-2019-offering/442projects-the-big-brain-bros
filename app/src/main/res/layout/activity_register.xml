@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -25,17 +24,18 @@
 
     <EditText
 
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/name"
         android:background="@android:color/transparent"
-        android:padding="12dp"
+        android:drawableLeft="@android:drawable/ic_menu_info_details"
         android:drawablePadding="12dp"
         android:hint="@string/your_name"
+        android:inputType="textPersonName"
+        android:padding="12dp"
         android:textColorHint="#fff"
-        android:drawableLeft="@android:drawable/ic_menu_info_details"
-        tools:ignore="Autofill" />
+        tools:ignore="Autofill"
+        android:drawableStart="@android:drawable/ic_menu_info_details" />
 
     <View
         android:layout_width="match_parent"
@@ -53,7 +53,8 @@
         android:hint="@string/username"
         android:textColorHint="#fff"
         android:drawableLeft="@drawable/ic_person_white_24dp"
-        tools:ignore="Autofill" />
+        tools:ignore="Autofill"
+        android:drawableStart="@drawable/ic_person_white_24dp" />
 
     <View
         android:layout_width="match_parent"
@@ -72,7 +73,8 @@
         android:hint="@string/emailaddress"
         android:textColorHint="#fff"
         tools:ignore="Autofill"
-        android:drawableLeft="@android:drawable/ic_dialog_email" />
+        android:drawableLeft="@android:drawable/ic_dialog_email"
+        android:drawableStart="@android:drawable/ic_dialog_email" />
 
     <View
         android:layout_width="match_parent"

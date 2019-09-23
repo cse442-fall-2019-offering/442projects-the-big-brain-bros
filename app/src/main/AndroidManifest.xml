@@ -4,12 +4,13 @@
     package="com.example.a442projects_the_big_brain_bros">
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_appicon"
         android:label="Fridge-a-licious"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_appicon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:allowBackup="false"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".RecipeList" />
         <activity
             android:name=".SplashScreen"
