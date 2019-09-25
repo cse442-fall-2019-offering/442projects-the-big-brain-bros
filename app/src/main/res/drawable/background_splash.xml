@@ -2,6 +2,6 @@
 <layer-list xmlns:android = "http://schemas.android.com/apk/res/android">
     <item android:drawable = "@color/white" />
     <item>
-        <bitmap android:gravity = "center" android:src="@drawable/whisk_logo_v2"/>
+        <bitmap android:layout_gravity = "center" android:src="@drawable/splash_screen"/>
     </item>
 </layer-list>
