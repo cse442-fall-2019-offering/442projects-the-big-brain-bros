@@ -54,6 +54,7 @@
         app:layout_constraintVertical_bias="0.764" />
 
     <Button
+        android:onClick="onLoginClick"
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="136dp"
