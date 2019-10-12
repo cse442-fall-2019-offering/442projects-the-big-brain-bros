@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private AppBarConfiguration mAppBarConfiguration;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent= new Intent(this, SearchActivity.class);
 //        startActivity(intent);
         onSearchRequested();
+    }
+
+    // Method for the Login button when clicked, this method is invoked (See button layout in fragment_home.xml
+    public void onLoginClick(View view){
+        Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+
     }
 
 
