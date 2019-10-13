@@ -53,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
                 String newItem=txtInput.getText().toString();
                 // add new item to arraylist
                 ingredientList.add(newItem);
+                txtInput.setText("");
                 // notify listview of data changed
                 adapter.notifyDataSetChanged();
             }
