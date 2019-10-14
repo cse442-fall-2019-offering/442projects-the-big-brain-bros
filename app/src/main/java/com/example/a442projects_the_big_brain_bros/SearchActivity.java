@@ -47,6 +47,8 @@ public class SearchActivity extends AppCompatActivity {
         txtInput = (EditText) findViewById(R.id.txtInput);
         Button btAdd=(Button)findViewById(R.id.btAdd);
 
+        Button search = (Button) findViewById(R. id. search);
+
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void search_recipes(){
+   public void search_recipes(View v){
         String URL = "https://api.spoonacular.com/recipes/search?apiKey=67f2f1b565f74563a58b4db485361fc3";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET,

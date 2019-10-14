@@ -22,6 +22,7 @@
 
         <Button
             android:id="@+id/search"
+            android:onClick="search_recipes"
             android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
