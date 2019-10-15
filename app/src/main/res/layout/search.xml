@@ -3,7 +3,38 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/txtInput"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="New item"
+            />
+        <Button
+            android:id="@+id/btAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_toRightOf="@+id/txtInput"
+            />
+
+        <Button
+            android:id="@+id/search"
+            android:onClick="search_recipes"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toEndOf="@+id/btAdd"
+            android:layout_toRightOf="@+id/btAdd"
+            android:text="Search" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="8dp"></ListView>
 </LinearLayout>

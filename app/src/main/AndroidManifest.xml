@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.a442projects_the_big_brain_bros">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:icon="@mipmap/ic_launcher_appicon"
         android:label="Fridge-a-licious"
@@ -41,7 +41,8 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchableActivity"/>
+                android:value=".SearchableActivity"
+                />
         </activity>
         <activity android:name=".SearchActivity"
             android:launchMode="singleTop" >
