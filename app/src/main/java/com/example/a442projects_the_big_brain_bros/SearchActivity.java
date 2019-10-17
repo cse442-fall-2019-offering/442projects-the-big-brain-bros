@@ -23,9 +23,11 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -56,14 +58,19 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void search_recipes(View v) {
-        String URL = "https://api.spoonacular.com/recipes/search?apiKey=91a3bd31de024979978c6593278502a3";
+        if(ingredientList.isEmpty()) {
+            return;
+        }
+        String ingredientQuery = String.join(",", ingredientList);
+        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=10" + "&apiKey=91a3bd31de024979978c6593278502a3";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET,
+
+        JsonArrayRequest objectRequest = new JsonArrayRequest(Request.Method.GET,
                 URL,
                 null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         Log.e("Rest Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
@@ -87,11 +94,10 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("Rest Response", message);
             }
         }
-
         );
-
         requestQueue.add(objectRequest);
     }
+
 
     private void searchListener() {
         ListView listView = (ListView) findViewById((R.id.listv));
