@@ -53,13 +53,30 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newItem=txtInput.getText().toString();
-                // add new item to arraylist
-                ingredientList.add(newItem);
-                txtInput.setText("");
-                // notify listview of data changed
-                adapter.notifyDataSetChanged();
+                if(!newItem.isEmpty()){
+                    ingredientList.add(newItem);
+                    txtInput.setText("");
+                    adapter.notifyDataSetChanged();
+                }
             }
 
+        });
+        txtInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return false;
+                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    String newItem=txtInput.getText().toString();
+                    if(!newItem.isEmpty()){
+                        ingredientList.add(newItem);
+                        txtInput.setText("");
+                        adapter.notifyDataSetChanged();
+                    }
+                    return true;
+                }
+                return false;
+            }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -10,7 +10,9 @@
             android:id="@+id/txtInput"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="New item"
+            android:hint="Enter ingredients.."
+            android:singleLine="true"
+
             />
         <Button
             android:id="@+id/btAdd"
