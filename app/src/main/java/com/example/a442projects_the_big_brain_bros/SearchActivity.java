@@ -22,19 +22,24 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<String> ingredientList;
     private ArrayAdapter<String> adapter;
     private EditText txtInput;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +50,15 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.txtitem, ingredientList);
         listView.setAdapter(adapter);
         txtInput = (EditText) findViewById(R.id.txtInput);
-        Button btAdd=(Button)findViewById(R.id.btAdd);
+        Button btAdd = (Button) findViewById(R.id.btAdd);
 
-        Button search = (Button) findViewById(R. id. search);
+        Button search = (Button) findViewById(R.id.search);
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newItem=txtInput.getText().toString();
-                if(!newItem.isEmpty()){
+                String newItem = txtInput.getText().toString();
+                if (!newItem.isEmpty()) {
                     ingredientList.add(newItem);
                     txtInput.setText("");
                     adapter.notifyDataSetChanged();
@@ -64,11 +69,11 @@ public class SearchActivity extends AppCompatActivity {
         txtInput.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                if (event.getAction() != KeyEvent.ACTION_DOWN)
                     return false;
-                if(keyCode == KeyEvent.KEYCODE_ENTER){
-                    String newItem=txtInput.getText().toString();
-                    if(!newItem.isEmpty()){
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    String newItem = txtInput.getText().toString();
+                    if (!newItem.isEmpty()) {
                         ingredientList.add(newItem);
                         txtInput.setText("");
                         adapter.notifyDataSetChanged();
@@ -87,15 +92,20 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-   public void search_recipes(View v){
-        String URL = "https://api.spoonacular.com/recipes/search?apiKey=67f2f1b565f74563a58b4db485361fc3";
+    public void search_recipes(View v) {
+        if(ingredientList.isEmpty()) {
+            return;
+        }
+        String ingredientQuery = String.join(",", ingredientList);
+        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=10" + "&apiKey=91a3bd31de024979978c6593278502a3";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET,
+
+        JsonArrayRequest objectRequest = new JsonArrayRequest(Request.Method.GET,
                 URL,
                 null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         Log.e("Rest Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
@@ -119,9 +129,8 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("Rest Response", message);
             }
         }
-
         );
-
         requestQueue.add(objectRequest);
     }
 }
+
