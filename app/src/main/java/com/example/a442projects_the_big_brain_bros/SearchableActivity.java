@@ -59,7 +59,6 @@ public class SearchableActivity extends Activity {
                         } else if (error instanceof TimeoutError) {
                             message = "Connection TimeOut! Please check your internet connection.";
                         }
-
                         Log.e("Rest Response", message);
                     }
         }
