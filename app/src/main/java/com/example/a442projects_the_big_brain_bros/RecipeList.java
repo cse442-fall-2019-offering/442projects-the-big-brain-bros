@@ -2,6 +2,7 @@ package com.example.a442projects_the_big_brain_bros;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,29 +23,34 @@ public class RecipeList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        updateView();
+
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+                updateView();
+//            }
+//        }, 2000);
+
+
     }
 
-    private void updateView(){
+    private void updateView() {
 //        ListView listView = (ListView) findViewById((R.id.listv));
 //        String[] items = {};
 //        dishes = new ArrayList<>(Arrays.asList(items));
 //        adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.txtitem, dishes);
 //        listView.setAdapter(adapter);
-            ArrayList<String> titleList = new ArrayList<String>();
-          ListView listView = (ListView) findViewById(R.id.listv);
+        ArrayList<String> titleList = new ArrayList<String>();
+        ListView listView = (ListView) findViewById(R.id.listv);
+
 //        final ArrayList<String> titleList = new ArrayList<>();
-          ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
 
         listView.setAdapter(arrayAdapter);
 
 
     }
-
-
-
-
-
 }
 
 

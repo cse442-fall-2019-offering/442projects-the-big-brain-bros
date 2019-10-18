@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,24 +67,33 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-    private void RecipeTitles() {
+    private void RecipeTitles(JSONArray x) {
 
-        if (JsonUpdated != null) {
+
+        if (x != null) {
             try {
 
                 titleList.clear();
-                for (int i = 0; i < JsonUpdated.length(); i++) {
-                    JSONObject c = JsonUpdated.getJSONObject(i);
+                for (int i = 0; i < x.length(); i++) {
+                    JSONObject c = x.getJSONObject(i);
                     String title = c.getString("title");
                     titleList.add(title);
-
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            Intent intent = new Intent (this, RecipeList.class);
+            startActivity(intent);
         }
+
+
+
+
+
+
     }
 
 
@@ -93,7 +103,7 @@ public class SearchActivity extends AppCompatActivity {
             return;
         }
         String ingredientQuery = String.join(",", ingredientList);
-        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=10" + "&apiKey=91a3bd31de024979978c6593278502a3";
+        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=10" + "&apiKey=a384ae69888249c5b39973e9fe602708";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         objectRequest = new JsonArrayRequest(Request.Method.GET,
@@ -102,9 +112,11 @@ public class SearchActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
                         Log.e("Rest Response", response.toString());
-                        
+
                         JsonUpdated = response;
+                        RecipeTitles(JsonUpdated);
 
                     }
                 }, new Response.ErrorListener() {
@@ -126,23 +138,30 @@ public class SearchActivity extends AppCompatActivity {
                 }
 
                 Log.e("Rest Response", message);
+
             }
+
         }
+
         );
+
 
         requestQueue.add(objectRequest);
 
 
-        Intent intent = new Intent (this, RecipeList.class);
+
+//        (new Handler()).postDelayed(this::RecipeTitles(), 5000);
+//
 
 
-        RecipeTitles();
-
-        if(titleList != null) {
 
 
-            startActivity(intent);
-        }
+
+
+
+//        RecipeTitles();
+
+
     }
 
 
