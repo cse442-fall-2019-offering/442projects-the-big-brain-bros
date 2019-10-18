@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +31,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -49,6 +53,9 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayAdapter<String> listAdapter;
     private AutoCompleteTextView editInput;
     public static JsonArrayRequest objectRequest;
+    public static JSONArray JsonUpdated;
+    public static ArrayList<String> titleList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,30 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search);
         searchListener();
     }
+
+
+
+    private void RecipeTitles() {
+
+        if (JsonUpdated != null) {
+            try {
+
+                titleList.clear();
+                for (int i = 0; i < JsonUpdated.length(); i++) {
+                    JSONObject c = JsonUpdated.getJSONObject(i);
+                    String title = c.getString("title");
+                    titleList.add(title);
+
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     public void search_recipes(View v) {
         if(ingredientList.isEmpty()) {
@@ -72,6 +103,9 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.e("Rest Response", response.toString());
+                        
+                        JsonUpdated = response;
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -95,10 +129,22 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
         );
+
         requestQueue.add(objectRequest);
+
+
         Intent intent = new Intent (this, RecipeList.class);
-        startActivity(intent);
+
+
+        RecipeTitles();
+
+        if(titleList != null) {
+
+
+            startActivity(intent);
+        }
     }
+
 
 
     private void searchListener() {
