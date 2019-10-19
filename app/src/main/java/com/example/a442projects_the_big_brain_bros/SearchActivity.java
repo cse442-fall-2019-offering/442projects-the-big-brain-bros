@@ -42,6 +42,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -56,6 +57,7 @@ public class SearchActivity extends AppCompatActivity {
     public static JsonArrayRequest objectRequest;
     public static JSONArray JsonUpdated;
     public static ArrayList<String> titleList = new ArrayList<>();
+    public static HashMap<String, Integer> recipeName = new HashMap<>();
 
 
     @Override
@@ -64,8 +66,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search);
         searchListener();
     }
-
-
 
     private void RecipeTitles(JSONArray x) {
 
@@ -77,7 +77,9 @@ public class SearchActivity extends AppCompatActivity {
                 for (int i = 0; i < x.length(); i++) {
                     JSONObject c = x.getJSONObject(i);
                     String title = c.getString("title");
+                    Integer id = c.getInt("id");
                     titleList.add(title);
+                    recipeName.put(title, id);
 
                 }
 
@@ -89,21 +91,14 @@ public class SearchActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
-
-
-
-
     }
-
-
 
     public void search_recipes(View v) {
         if(ingredientList.isEmpty()) {
             return;
         }
         String ingredientQuery = String.join(",", ingredientList);
-        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=10" + "&apiKey=a384ae69888249c5b39973e9fe602708";
+        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=25" + "&apiKey=a384ae69888249c5b39973e9fe602708";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         objectRequest = new JsonArrayRequest(Request.Method.GET,
@@ -145,26 +140,9 @@ public class SearchActivity extends AppCompatActivity {
 
         );
 
-
         requestQueue.add(objectRequest);
 
-
-
-//        (new Handler()).postDelayed(this::RecipeTitles(), 5000);
-//
-
-
-
-
-
-
-
-//        RecipeTitles();
-
-
     }
-
-
 
     private void searchListener() {
         ListView listView = (ListView) findViewById((R.id.listv));
