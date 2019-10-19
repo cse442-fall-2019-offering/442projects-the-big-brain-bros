@@ -51,6 +51,11 @@
                 android:value=".SearchableActivity"/>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".RecipeActivity"
+            android:launchMode="singleTop"
+
+            >
+        </activity>
     </application>
 
 </manifest>
