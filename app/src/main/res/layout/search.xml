@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
+        <!--Autocompletion of ingredients when typing into the search bar. -->
         <AutoCompleteTextView
 
             android:id="@+id/txtInput"
@@ -15,10 +15,12 @@
             android:layout_height="wrap_content"
             android:hint="Enter ingredients.."
             android:singleLine="true"
-            android:completionThreshold="1"
+            android:completionThreshold="3"
             android:completionHint="Enter ingredients.."
 
             />
+
+        <!--Add button -->
         <Button
             android:id="@+id/btAdd"
             android:layout_width="wrap_content"
@@ -27,6 +29,8 @@
             android:layout_toRightOf="@+id/txtInput"
             />
 
+
+        <!--Search Button with onClick functionality to run search_recipes method. -->
         <Button
             android:id="@+id/search"
             android:onClick="search_recipes"

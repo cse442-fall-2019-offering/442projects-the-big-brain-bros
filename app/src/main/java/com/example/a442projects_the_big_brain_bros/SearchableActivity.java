@@ -23,6 +23,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+
+//NO LONGER USED. WAS USED FOR SPRINT 1 MOCK UP OF SEARCHING/DISPLAYING RECIPES.
+
 public class SearchableActivity extends Activity {
 
     @Override
@@ -69,15 +72,15 @@ public class SearchableActivity extends Activity {
 
     }
 
-    private void handleIntent(Intent intent) {
+    private void Handle_intent(Intent intent) {
         // Verifies intent action and get the query
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
+            Do_my_search(query);
         }
     }
 
-    private void doMySearch(String query) {
+    private void Do_my_search(String query) {
         if(!query.isEmpty()) {
             Intent intent = new Intent(this, RecipeList.class);
             startActivity(intent);

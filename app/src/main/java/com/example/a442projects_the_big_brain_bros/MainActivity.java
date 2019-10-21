@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void onSearchSelect(View view){
+    public void on_search_select(View view){
         Intent intent= new Intent(this, SearchActivity.class);
         startActivity(intent);
 //        onSearchRequested();
     }
 
     // Method for the Login button when clicked, this method is invoked (See button layout in fragment_home.xml
-    public void onLoginClick(View view){
+    public void on_login_click(View view){
         Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
 
