@@ -65,12 +65,12 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
-        searchListener();
+        Search_listener();
     }
 
     //Method created to parse the API JSONArray response and extract the title of the recipe and the id of the recipe.
     //Stored into a titleList ArrayList (which holds the titles of the recipes) and HashMap(That stores title, id#)
-    private void RecipeTitles(JSONArray x) {
+    private void Recipe_titles(JSONArray x) {
 
         if (x != null) {
             try {
@@ -97,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //Method  created to call API Spoonacular.  It uses ingredientQuery to search by the ingredients we input in.
     //It calls the API and returns the request and saves it in the form of a JSONArray.
-    public void search_recipes(View v) {
+    public void Search_recipes(View v) {
         if(ingredientList.isEmpty()) {
             return;
         }
@@ -115,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                         Log.e("Rest Response", response.toString());
 
                         JsonUpdated = response;  //Copy the JSON array to a global variable we can use in other activities.
-                        RecipeTitles(JsonUpdated);  //Method called to parse the JSONArray for title and id# after we get the json response.
+                        Recipe_titles(JsonUpdated);  //Method called to parse the JSONArray for title and id# after we get the json response.
 
                     }
                 }, new Response.ErrorListener() {
@@ -151,7 +151,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //Button listeners for the creation of our ingredient list.  Handles autofill of ingredients, adding ingredients to listview,
     //and updating listview to show new entries.
-    private void searchListener() {
+    private void Search_listener() {
         ListView listView = (ListView) findViewById((R.id.listv));
         String[] items = {};
         ingredientList = new ArrayList<>(Arrays.asList(items));

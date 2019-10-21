@@ -48,11 +48,11 @@ public class RecipeList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        updateView();
+        Update_view();
 
     }
     //Starts the new activity RecipeActivity to display the recipe details.
-    private void startRecipeActivity(JSONArray x){
+    private void Start_recipe_activity(JSONArray x){
 
         Intent intent = new Intent (this, RecipeActivity.class);
         startActivity(intent);
@@ -61,7 +61,7 @@ public class RecipeList extends AppCompatActivity {
     //This method calls spoonacular api with the recipe title id to get instructions in the form of a JSONArray.
     //Parses through the JSON to get the Recipe title, Recipe Ingredients, and Recipe Instructions.  After parsing the JSONArray
     //It calls "startRecipeActivity" and passes in the parsed JSONarray.
-    private void jsonRequest(int id){
+    private void Json_request(int id){
         String URL = "https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions" + "?apiKey=" + apiKey;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         objectRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
@@ -91,7 +91,7 @@ public class RecipeList extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        startRecipeActivity(response);
+                        Start_recipe_activity(response);
                     }
                 },new Response.ErrorListener() {
             @Override
@@ -117,7 +117,7 @@ public class RecipeList extends AppCompatActivity {
     }
 
     //Updates listview to display titles of recipes.  Listview onClick calls the method jsonRequest and passes in the id# of the recipe.
-    private void updateView() {
+    private void Update_view() {
         ListView listView = (ListView) findViewById(R.id.listv);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
         listView.setAdapter(arrayAdapter);
@@ -126,7 +126,7 @@ public class RecipeList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 title = SearchActivity.titleList.get(i);
                 int id = SearchActivity.recipeName.get(title);
-                jsonRequest(id);
+                Json_request(id);
             }
         });
     }
