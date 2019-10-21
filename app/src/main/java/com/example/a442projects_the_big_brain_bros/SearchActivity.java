@@ -113,7 +113,7 @@ public class SearchActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         Log.e("Rest Response", response.toString());
-
+                        JsonUpdated = new JSONArray();
                         JsonUpdated = response;  //Copy the JSON array to a global variable we can use in other activities.
                         RecipeTitles(JsonUpdated);  //Method called to parse the JSONArray for title and id# after we get the json response.
 

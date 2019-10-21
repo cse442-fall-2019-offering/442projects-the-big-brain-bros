@@ -70,6 +70,8 @@ public class RecipeList extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         try {
+                            ingredientList.clear(); //FIXED DUPLICATE INGREDIENT LIST AND STEPS BUG
+                            instruction.clear(); //FIXED DUPLICATE INGREDIENT LIST AND STEPS BUG
                             JSONObject json = response.getJSONObject(0);
                             JSONArray jArray = (JSONArray) json.getJSONArray("steps");
                             if (jArray != null) {
