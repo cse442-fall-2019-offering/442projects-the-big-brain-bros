@@ -97,6 +97,8 @@ public class SearchActivity extends AppCompatActivity {
 
     //Method  created to call API Spoonacular.  It uses ingredientQuery to search by the ingredients we input in.
     //It calls the API and returns the request and saves it in the form of a JSONArray.
+
+
     public void search_recipes(View v) {
         if(ingredientList.isEmpty()) {
             return;
