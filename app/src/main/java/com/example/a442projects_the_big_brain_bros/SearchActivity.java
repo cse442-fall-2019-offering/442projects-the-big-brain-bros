@@ -56,7 +56,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayAdapter<String> listAdapter;
     private AutoCompleteTextView editInput;
     public static JsonArrayRequest objectRequest;
-    public static JSONArray JsonUpdated;
+    public static JSONArray jsonUpdated;
     public static ArrayList<String> titleList = new ArrayList<>();
     public static HashMap<String, Integer> recipeName = new HashMap<>();
 
@@ -70,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //Method created to parse the API JSONArray response and extract the title of the recipe and the id of the recipe.
     //Stored into a titleList ArrayList (which holds the titles of the recipes) and HashMap(That stores title, id#)
-    private void RecipeTitles(JSONArray x) {
+    private void recipe_titles(JSONArray x) {
 
         if (x != null) {
             try {
@@ -115,9 +115,9 @@ public class SearchActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         Log.e("Rest Response", response.toString());
-                        JsonUpdated = new JSONArray();
-                        JsonUpdated = response;  //Copy the JSON array to a global variable we can use in other activities.
-                        RecipeTitles(JsonUpdated);  //Method called to parse the JSONArray for title and id# after we get the json response.
+                        jsonUpdated = new JSONArray();
+                        jsonUpdated = response;  //Copy the JSON array to a global variable we can use in other activities.
+                        recipe_titles(jsonUpdated);  //Method called to parse the JSONArray for title and id# after we get the json response.
 
                     }
                 }, new Response.ErrorListener() {
