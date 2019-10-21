@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RecipeActivity extends AppCompatActivity {
 
-//    public TextView textView = (TextView) findViewById(R.id.textV);
+    //    public TextView textView = (TextView) findViewById(R.id.textV);
     @Override
+
+    //onCreate passed in the parsed JSONarray.  The details are then displayed onto the new activity(Recipe title, Recipe Ingredients, Recipe instructions).
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_recipe);
@@ -29,3 +31,4 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(textView);
     }
 }
+

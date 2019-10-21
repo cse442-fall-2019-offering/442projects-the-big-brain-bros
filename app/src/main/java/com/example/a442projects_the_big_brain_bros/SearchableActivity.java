@@ -23,6 +23,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+
+//NO LONGER USED. WAS USED FOR SPRINT 1 MOCK UP OF SEARCHING/DISPLAYING RECIPES.
+
 public class SearchableActivity extends Activity {
 
     @Override
