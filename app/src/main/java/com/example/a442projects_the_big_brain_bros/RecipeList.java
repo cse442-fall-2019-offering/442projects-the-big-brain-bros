@@ -51,67 +51,72 @@ public class RecipeList extends AppCompatActivity {
         updateView();
 
     }
-
+    //Starts the new activity RecipeActivity to display the recipe details.
     private void startRecipeActivity(JSONArray x){
 
         Intent intent = new Intent (this, RecipeActivity.class);
         startActivity(intent);
     }
 
+    //This method calls spoonacular api with the recipe title id to get instructions in the form of a JSONArray.
+    //Parses through the JSON to get the Recipe title, Recipe Ingredients, and Recipe Instructions.  After parsing the JSONArray
+    //It calls "startRecipeActivity" and passes in the parsed JSONarray.
     private void jsonRequest(int id){
         String URL = "https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions" + "?apiKey=" + apiKey;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         objectRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
-            new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
 
-                    try {
-                        JSONObject json = response.getJSONObject(0);
-                        JSONArray jArray = (JSONArray) json.getJSONArray("steps");
-                        if (jArray != null) {
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject steps = (JSONObject) jArray.get(i);
-                                String step = steps.getString("step");
-                                JSONArray jsonIngredient = (JSONArray) steps.getJSONArray("ingredients");
-                                if (jsonIngredient != null){
-                                    for (int j = 0; j < jsonIngredient.length(); j++){
-                                        JSONObject ingredient = (JSONObject) jsonIngredient.get(j);
-                                        String ingredientName = ingredient.getString("name");
-                                        if (!ingredientList.contains(ingredientName))
-                                            ingredientList.add(ingredientName);
+                        try {
+                            JSONObject json = response.getJSONObject(0);
+                            JSONArray jArray = (JSONArray) json.getJSONArray("steps");
+                            if (jArray != null) {
+                                for (int i = 0; i < jArray.length(); i++) {
+                                    JSONObject steps = (JSONObject) jArray.get(i);
+                                    String step = steps.getString("step");
+                                    JSONArray jsonIngredient = (JSONArray) steps.getJSONArray("ingredients");
+                                    if (jsonIngredient != null){
+                                        for (int j = 0; j < jsonIngredient.length(); j++){
+                                            JSONObject ingredient = (JSONObject) jsonIngredient.get(j);
+                                            String ingredientName = ingredient.getString("name");
+                                            if (!ingredientList.contains(ingredientName))
+                                                ingredientList.add(ingredientName);
+                                        }
                                     }
+                                    instruction.add(step);
                                 }
-                                instruction.add(step);
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        startRecipeActivity(response);
                     }
-                    startRecipeActivity(response);
+                },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {String message = null;
+                if (error instanceof NetworkError) {
+                    message = "Cannot connect to Internet...Please check your connection!";
+                } else if (error instanceof ServerError) {
+                    message = "The server could not be found. Please try again after some time!!";
+                } else if (error instanceof AuthFailureError) {
+                    message = "Cannot connect to Internet...Please check your connection!";
+                } else if (error instanceof ParseError) {
+                    message = "Parsing error! Please try again after some time!!";
+                } else if (error instanceof NoConnectionError) {
+                    message = "Cannot connect to Internet...Please check your connection!";
+                } else if (error instanceof TimeoutError) {
+                    message = "Connection TimeOut! Please check your internet connection.";
                 }
-            },new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {String message = null;
-                    if (error instanceof NetworkError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (error instanceof ServerError) {
-                        message = "The server could not be found. Please try again after some time!!";
-                    } else if (error instanceof AuthFailureError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (error instanceof ParseError) {
-                        message = "Parsing error! Please try again after some time!!";
-                    } else if (error instanceof NoConnectionError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (error instanceof TimeoutError) {
-                        message = "Connection TimeOut! Please check your internet connection.";
-                    }
-                    Log.e("Rest Response", message);
+                Log.e("Rest Response", message);
             }
 
         });
         requestQueue.add(objectRequest);
     }
+
+    //Updates listview to display titles of recipes.  Listview onClick calls the method jsonRequest and passes in the id# of the recipe.
     private void updateView() {
         ListView listView = (ListView) findViewById(R.id.listv);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
@@ -126,6 +131,7 @@ public class RecipeList extends AppCompatActivity {
         });
     }
 }
+
 
 
 
