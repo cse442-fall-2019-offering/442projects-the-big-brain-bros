@@ -28,7 +28,7 @@
         android:layout_marginTop="280dp"
         android:layout_marginBottom="400dp"
         android:background="@color/colorAccent"
-        android:onClick="onSearchSelect"
+        android:onClick="on_search_select"
         android:text="@string/search"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -54,7 +54,7 @@
         app:layout_constraintVertical_bias="0.764" />
 
     <Button
-        android:onClick="onLoginClick"
+        android:onClick="on_login_click"
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="136dp"

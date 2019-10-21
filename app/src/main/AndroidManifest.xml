@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.a442projects_the_big_brain_bros">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:icon="@mipmap/ic_launcher_appicon"
         android:label="Fridge-a-licious"
@@ -11,7 +11,6 @@
         android:theme="@style/AppTheme"
         android:allowBackup="false"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RecipeList" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
@@ -41,15 +40,25 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchableActivity"/>
+                android:value=".SearchableActivity"
+                />
         </activity>
         <activity android:name=".SearchActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
+            >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity"/>
         </activity>
+        <activity android:name=".RecipeList"
+            android:parentActivityName=".SearchActivity"/>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".RecipeActivity"
+            android:launchMode="standard"
+            android:parentActivityName=".RecipeList"
+            >
+        </activity>
     </application>
 
 </manifest>
