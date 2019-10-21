@@ -1,6 +1,7 @@
 package com.example.a442projects_the_big_brain_bros;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class RecipeList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
         update_view();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
     //Starts the new activity RecipeActivity to display the recipe details.

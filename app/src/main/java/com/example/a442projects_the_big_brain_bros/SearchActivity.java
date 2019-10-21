@@ -1,5 +1,6 @@
 package com.example.a442projects_the_big_brain_bros;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,9 +64,12 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState );
         setContentView(R.layout.search);
+
         searchListener();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     //Method created to parse the API JSONArray response and extract the title of the recipe and the id of the recipe.

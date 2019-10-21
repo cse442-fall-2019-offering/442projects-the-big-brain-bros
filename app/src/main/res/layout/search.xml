@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:hint="Enter ingredients.."
             android:singleLine="true"
-            android:completionThreshold="1"
+            android:completionThreshold="3"
             android:completionHint="Enter ingredients.."
 
             />
