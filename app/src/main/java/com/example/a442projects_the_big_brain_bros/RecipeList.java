@@ -44,6 +44,8 @@ public class RecipeList extends AppCompatActivity {
     public static ArrayList<String> instruction = new ArrayList<>();
     public static String title;
     public static ArrayList<String> ingredientList = new ArrayList<>();
+    public ListView listv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class RecipeList extends AppCompatActivity {
         update_view();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        listv = (ListView) findViewById(R.id.listv);
+        ListViewAdapter adapter = new ListViewAdapter(this, SearchActivity.titleList, SearchActivity.recipeIcons);
+        listv.setAdapter(adapter);
 
     }
     //Starts the new activity RecipeActivity to display the recipe details.
