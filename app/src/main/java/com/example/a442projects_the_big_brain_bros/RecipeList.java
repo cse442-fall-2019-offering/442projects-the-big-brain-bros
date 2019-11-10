@@ -38,12 +38,14 @@ public class RecipeList extends AppCompatActivity {
 
     public ArrayList<String> dishes;
     private ArrayAdapter<String> adapter;
-    private final String apiKey = "a384ae69888249c5b39973e9fe602708";
+    public static final String apiKey = "2b590499522c4ac0a5cb4db5ef61b3bb";
     private static JsonArrayRequest objectRequest;
     public static ArrayList jsonText;
     public static ArrayList<String> instruction = new ArrayList<>();
     public static String title;
     public static ArrayList<String> ingredientList = new ArrayList<>();
+    public ListView listv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class RecipeList extends AppCompatActivity {
         update_view();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        listv = (ListView) findViewById(R.id.listv);
+        ListViewAdapter adapter = new ListViewAdapter(this, SearchActivity.titleList, SearchActivity.recipeIcons);
+        listv.setAdapter(adapter);
 
     }
     //Starts the new activity RecipeActivity to display the recipe details.
