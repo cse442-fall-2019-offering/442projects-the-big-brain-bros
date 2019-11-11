@@ -28,12 +28,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Intent intent;
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
 
+                        break;
+                    case R.id.nav_signup:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
+
+                        break;
+                    case R.id.nav_slideshow:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HistoryFragment()).commit();
+                        open();
+                        break;
+                }
+                return true;
+            }
+        });
+
+    }
+    public void open(){
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -80,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_signup:
                 getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
 
+                break;
+            case R.id.nav_slideshow:
                 break;
         }
         return true;
@@ -94,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Method for the Login button when clicked, this method is invoked (See button layout in fragment_home.xml
     public void on_login_click(View view){
         Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+        startActivity(intent);
 
     }
 

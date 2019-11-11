@@ -59,6 +59,7 @@
             android:parentActivityName=".RecipeList"
             >
         </activity>
+        <activity android:name=".HistoryActivity"></activity>
     </application>
 
 </manifest>
