@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +31,13 @@ import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +53,7 @@ public class RecipeList extends AppCompatActivity {
     public static String title;
     public static ArrayList<String> ingredientList = new ArrayList<>();
     public ListView listv;
-
+    public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,7 @@ public class RecipeList extends AppCompatActivity {
         listv = (ListView) findViewById(R.id.listv);
         ListViewAdapter adapter = new ListViewAdapter(this, SearchActivity.titleList, SearchActivity.recipeIcons);
         listv.setAdapter(adapter);
+
 
     }
     //Starts the new activity RecipeActivity to display the recipe details.
@@ -129,6 +138,7 @@ public class RecipeList extends AppCompatActivity {
     //Updates listview to display titles of recipes.  Listview onClick calls the method jsonRequest and passes in the id# of the recipe.
     private void update_view() {
         ListView listView = (ListView) findViewById(R.id.listv);
+
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -136,10 +146,33 @@ public class RecipeList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 title = SearchActivity.titleList.get(i);
                 int id = SearchActivity.recipeName.get(title);
+                FileOutputStream fos = null;
+                try {
+                    fos = openFileOutput(HISTORY_FILE_NAME, MODE_APPEND);
+
+                    title = title + "\n";
+                    fos.write(title.getBytes());
+
+                    //Print File Save Feedback
+                    Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + HISTORY_FILE_NAME, Toast.LENGTH_LONG).show();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (fos != null){
+                        try {
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 json_request(id);
             }
         });
     }
+
 }
 
 

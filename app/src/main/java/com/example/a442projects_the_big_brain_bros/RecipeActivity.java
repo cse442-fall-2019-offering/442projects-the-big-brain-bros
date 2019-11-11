@@ -3,6 +3,7 @@ package com.example.a442projects_the_big_brain_bros;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,7 +35,10 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(textView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
     }
+
 
 }
 
