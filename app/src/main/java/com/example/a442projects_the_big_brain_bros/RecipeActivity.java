@@ -7,14 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -44,8 +39,6 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(textView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 
     // create an action bar button
@@ -67,29 +60,6 @@ public class RecipeActivity extends AppCompatActivity {
                     mIsSaved = false;
                 } else {
                     mIsSaved = true;
-                }
-
-                //save the favorite recipe
-                String title;
-                FileOutputStream fos = null;
-
-                try{
-                    fos = openFileOutput("FAVORITE_RECIPES", MODE_APPEND);
-                    title = RecipeList.title;
-                    fos.write(title.getBytes());  //write the text to the local storage
-                    Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
-                }catch (FileNotFoundException e){
-                    e.printStackTrace();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }finally {
-                    if (fos != null){
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }
                 invalidateOptionsMenu(); //cause a redraw
                 break;
