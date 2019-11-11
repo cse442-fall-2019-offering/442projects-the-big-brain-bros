@@ -34,4 +34,5 @@
     <string name="email_address">EmailAddress</string>
     <string name="emailaddress">Email Address</string>
     <string name="your_name">Your Name</string>
+    <string name="save">Save</string>
 </resources>

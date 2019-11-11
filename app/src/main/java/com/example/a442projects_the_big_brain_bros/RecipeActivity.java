@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class RecipeActivity extends AppCompatActivity {
+
+    boolean mIsSaved = false;
+
 
     //    public TextView textView = (TextView) findViewById(R.id.textV);
     @Override
@@ -39,6 +43,48 @@ public class RecipeActivity extends AppCompatActivity {
 
     }
 
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.recipe_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = true;
+        switch (item.getItemId()) {
+            case R.id.save_button:
+                if (mIsSaved) { //you could modify this to check the icon/text of the menu item
+                    mIsSaved = false;
+                } else {
+                    mIsSaved = true;
+                }
+                invalidateOptionsMenu(); //cause a redraw
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mIsSaved) {
+            //in production you'd probably be better off keeping a reference to the item
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_heart)
+                    .setTitle("Unsave");
+        } else {
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_border_heart)
+                    .setTitle("Save");
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 }
 
