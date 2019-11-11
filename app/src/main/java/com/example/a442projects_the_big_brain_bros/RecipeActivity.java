@@ -19,6 +19,30 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_recipe);
         TextView textView = new TextView(this);
+        TextView title = (TextView) findViewById(R.id.textT);
+        title.setText(RecipeList.title + "\n");
+        String text = "";
+        TextView ingredients = (TextView) findViewById(R.id.textIL);
+        for(int i = 0; i < RecipeList.ingredientList.size(); i++){
+            text += RecipeList.ingredientList.get(i) + "\n";
+        }
+        ingredients.setText(text + "\n");
+        TextView instruction = (TextView) findViewById(R.id.textSL);
+        text = "";
+        for(int i = 0; i < RecipeList.instruction.size(); i++){
+            text += (i+1) + ". " +  RecipeList.instruction.get(i) + "\n\n";
+        }
+        instruction.setText(text);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+}
+/*
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_recipe);
+        TextView textView = new TextView(this);
         textView.setTextSize(20);
         String text = RecipeList.title +"\n\n"  + "Ingredients: \n";
 
@@ -34,7 +58,4 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(textView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
-}
-
+ */
