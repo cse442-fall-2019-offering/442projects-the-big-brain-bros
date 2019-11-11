@@ -13,6 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 
 public class RecipeActivity extends AppCompatActivity {
 
+    boolean mIsSaved = false;
+
+
     //    public TextView textView = (TextView) findViewById(R.id.textV);
     @Override
 
@@ -50,12 +53,35 @@ public class RecipeActivity extends AppCompatActivity {
     // handle button activities
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.save_button) {
-            // do something here
+        boolean result = true;
+        switch (item.getItemId()) {
+            case R.id.save_button:
+                if (mIsSaved) { //you could modify this to check the icon/text of the menu item
+                    mIsSaved = false;
+                } else {
+                    mIsSaved = true;
+                }
+                invalidateOptionsMenu(); //cause a redraw
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return result;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mIsSaved) {
+            //in production you'd probably be better off keeping a reference to the item
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_heart)
+                    .setTitle("Unsave");
+        } else {
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_border_heart)
+                    .setTitle("Save");
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
 }

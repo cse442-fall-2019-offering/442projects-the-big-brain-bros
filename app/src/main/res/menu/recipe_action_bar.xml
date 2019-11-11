@@ -5,6 +5,7 @@
         android:id="@+id/save_button"
         android:title="@string/save"
         app:showAsAction="always"
-        android:icon="@drawable/save"
+        android:icon="@drawable/white_border_heart"
         />
+
 </menu>
