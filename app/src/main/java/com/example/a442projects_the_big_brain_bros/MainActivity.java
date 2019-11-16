@@ -67,18 +67,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.nav_slideshow:
+                        break;
+                    case R.id.nav_gallery:
+                        openFavorites();
+                }
+                return true;
+            }
+        });
     }
 
+    public void openFavorites(){
+        Intent intent = new Intent (this, FavoriteActivity.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
 
                 break;
             case R.id.nav_signup:
-                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
 
                 break;
         }
