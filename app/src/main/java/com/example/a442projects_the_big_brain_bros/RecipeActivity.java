@@ -7,13 +7,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 public class RecipeActivity extends AppCompatActivity {
 
-    boolean mIsSaved = false;
+    boolean mIsSaved = true;
 
 
     //    public TextView textView = (TextView) findViewById(R.id.textV);
@@ -37,8 +46,10 @@ public class RecipeActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setMovementMethod(new ScrollingMovementMethod());
         setContentView(textView);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
     }
 
     // create an action bar button
@@ -57,9 +68,91 @@ public class RecipeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save_button:
                 if (mIsSaved) { //you could modify this to check the icon/text of the menu item
+
+                    String title;
+                    FileOutputStream fos = null;
+                    try {
+                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
+                        title = RecipeList.title;
+                        fos.write(title.getBytes());  //write the text to the local storage
+
+                        fos = null;
+
+                        Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                     mIsSaved = false;
                 } else {
+
+                    ArrayList<String> title = new ArrayList<>();
+                    FileInputStream fis = null;
+                    try {
+                        fis = openFileInput("FAVORITE_RECIPES.txt");
+                        InputStreamReader isr = new InputStreamReader(fis);
+                        BufferedReader br = new BufferedReader(isr);
+                        StringBuilder sb = new StringBuilder();
+                        String text;
+                        while ((text = br.readLine()) != null) {
+                            sb.append(text).append("\n");
+                            if (!(text.equals(RecipeList.title)))
+                                title.add(text);
+                        }
+
+                        isr = null;
+                        br = null;
+                        sb = null;
+                        fis = null;
+
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fis != null) {
+                            try {
+                                fis.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    FileOutputStream fos = null;
+                    try {
+
+                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
+                        String joinedTitle = String.join("\n", title);
+                        fos.write(joinedTitle.getBytes());  //write the text to the local storage
+                        fos = null;
+                        Toast.makeText(getApplicationContext(), "Unsaved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
                     mIsSaved = true;
+
                 }
                 invalidateOptionsMenu(); //cause a redraw
                 break;
@@ -74,15 +167,15 @@ public class RecipeActivity extends AppCompatActivity {
         if (mIsSaved) {
             //in production you'd probably be better off keeping a reference to the item
             menu.findItem(R.id.save_button)
-                    .setIcon(R.drawable.white_heart)
-                    .setTitle("Unsave");
-        } else {
-            menu.findItem(R.id.save_button)
                     .setIcon(R.drawable.white_border_heart)
                     .setTitle("Save");
+        } else {
+            menu.findItem(R.id.save_button)
+
+                    .setIcon(R.drawable.white_heart)
+                    .setTitle("Unsave");
         }
         return super.onPrepareOptionsMenu(menu);
     }
-
 }
 
