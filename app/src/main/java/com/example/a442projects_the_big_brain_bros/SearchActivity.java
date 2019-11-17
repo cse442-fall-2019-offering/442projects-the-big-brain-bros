@@ -132,7 +132,7 @@ public class SearchActivity extends AppCompatActivity {
             return;
         }
         String ingredientQuery = String.join(",", ingredientList);
-        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=25" + "&apiKey=" + RecipeList.apiKey;
+        String URL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientQuery + "&number=25" + "&apiKey=" + MainActivity.apiKey;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         objectRequest = new JsonArrayRequest(Request.Method.GET,

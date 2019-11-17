@@ -46,14 +46,14 @@ public class RecipeList extends AppCompatActivity {
 
     public ArrayList<String> dishes;
     private ArrayAdapter<String> adapter;
-    public static final String apiKey = "2b590499522c4ac0a5cb4db5ef61b3bb";
+
     private static JsonArrayRequest objectRequest;
     public static ArrayList jsonText;
     public static ArrayList<String> instruction = new ArrayList<>();
     public static String title;
     public static ArrayList<String> ingredientList = new ArrayList<>();
     public ListView listv;
-    public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class RecipeList extends AppCompatActivity {
     //Parses through the JSON to get the Recipe title, Recipe Ingredients, and Recipe Instructions.  After parsing the JSONArray
     //It calls "startRecipeActivity" and passes in the parsed JSONarray.
     private void json_request(int id){
-        String URL = "https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions" + "?apiKey=" + apiKey;
+        String URL = "https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions" + "?apiKey=" + MainActivity.apiKey;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         objectRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONArray>() {
@@ -145,16 +145,17 @@ public class RecipeList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 title = SearchActivity.titleList.get(i);
+                String recipeIcon = SearchActivity.recipeIcons.get(i);
                 int id = SearchActivity.recipeName.get(title);
                 FileOutputStream fos = null;
                 try {
-                    fos = openFileOutput(HISTORY_FILE_NAME, MODE_APPEND);
+                    fos = openFileOutput(MainActivity.HISTORY_FILE_NAME, MODE_APPEND);
 
-                    title = title + "\n";
-                    fos.write(title.getBytes());
-
+                    String recipeInfo = title + ", " + Integer.toString(id) + ", " + recipeIcon + "\n";
+                    fos.write(recipeInfo.getBytes());
+                    Toast.makeText(getApplicationContext(), recipeInfo, Toast.LENGTH_LONG).show();
                     //Print File Save Feedback
-                    Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + HISTORY_FILE_NAME, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + MainActivity., Toast.LENGTH_LONG).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
