@@ -16,10 +16,6 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/Historyt" />
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/Search" />
     </group>
 
     <item android:title="@string/settings">
@@ -29,13 +25,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/login" />
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/logout" />
-            <item
                 android:id="@+id/nav_signup"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/signupnow" />
+                android:title="@string/registration_here" />
         </menu>
     </item>
 

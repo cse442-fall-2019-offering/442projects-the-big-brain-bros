@@ -24,6 +24,30 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_recipe);
         TextView textView = new TextView(this);
+        TextView title = (TextView) findViewById(R.id.textT);
+        title.setText(RecipeList.title + "\n");
+        String text = "";
+        TextView ingredients = (TextView) findViewById(R.id.textIL);
+        for(int i = 0; i < RecipeList.ingredientList.size(); i++){
+            text += RecipeList.ingredientList.get(i) + "\n";
+        }
+        ingredients.setText(text + "\n");
+        TextView instruction = (TextView) findViewById(R.id.textSL);
+        text = "";
+        for(int i = 0; i < RecipeList.instruction.size(); i++){
+            text += (i+1) + ". " +  RecipeList.instruction.get(i) + "\n\n";
+        }
+        instruction.setText(text);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+}
+/*
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_recipe);
+        TextView textView = new TextView(this);
         textView.setTextSize(20);
         String text = RecipeList.title +"\n\n"  + "Ingredients: \n";
 
@@ -41,6 +65,49 @@ public class RecipeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+    }
+
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.recipe_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = true;
+        switch (item.getItemId()) {
+            case R.id.save_button:
+                if (mIsSaved) { //you could modify this to check the icon/text of the menu item
+                    mIsSaved = false;
+                } else {
+                    mIsSaved = true;
+                }
+                invalidateOptionsMenu(); //cause a redraw
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mIsSaved) {
+            //in production you'd probably be better off keeping a reference to the item
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_heart)
+                    .setTitle("Unsave");
+        } else {
+            menu.findItem(R.id.save_button)
+                    .setIcon(R.drawable.white_border_heart)
+                    .setTitle("Save");
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     // create an action bar button
