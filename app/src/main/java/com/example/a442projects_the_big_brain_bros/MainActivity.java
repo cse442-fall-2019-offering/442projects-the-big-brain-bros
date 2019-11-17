@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 switch (menuItem.getItemId()) {
                     case R.id.nav_login:
                         getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
+                    case R.id.nav_gallery:
+                        openFavorites();
 
                         break;
                     case R.id.nav_signup:
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    public void openFavorites(){
+        Intent intent = new Intent (this, FavoriteActivity.class);
+        startActivity(intent);
     }
     public void open(){
         readHistory();
@@ -148,11 +153,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
 
                 break;
             case R.id.nav_signup:
-                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
 
                 break;
             case R.id.nav_slideshow:

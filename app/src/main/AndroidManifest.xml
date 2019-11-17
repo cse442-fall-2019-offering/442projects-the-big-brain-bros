@@ -64,6 +64,7 @@
             android:launchMode="standard"
             android:parentActivityName=".RecipeList"
             ></activity>
+        <activity android:name=".FavoriteActivity" ></activity>
     </application>
 
 </manifest>
