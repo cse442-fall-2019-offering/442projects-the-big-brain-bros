@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -40,31 +41,35 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends AppCompatActivity {
     public ListView listv;
     public static ArrayList<String> titleList = new ArrayList<>();
-
+    public static ArrayList<String> recipeIcons =  new ArrayList<>();
     private static JsonArrayRequest objectRequest;
     public static ArrayList<String> instruction = new ArrayList<>();
     public static ArrayList<String> ingredientList = new ArrayList<>();
     public static String title;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
         onRecipeClick();
         listv = (ListView) findViewById(R.id.listv);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getTitleList());
-        listv.setAdapter(arrayAdapter);
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getTitleList());
+        getTitleList();
+        ListViewAdapter adapter = new ListViewAdapter(this, titleList, recipeIcons);
+        listv.setAdapter(adapter);
 
     }
 
-    public ArrayList<String> getTitleList() {
+    public void getTitleList() {
         titleList.clear();
         for(ArrayList<String> key : MainActivity.recipeInfo){
             titleList.add(key.get(0));
+            recipeIcons.add(key.get(2));
+
         }
-        return titleList;
     }
 
     private void onRecipeClick(){
@@ -78,8 +83,8 @@ public class HistoryActivity extends Activity {
 
                 title = MainActivity.recipeInfo.get(i).get(0);
                 int id = Integer.parseInt(MainActivity.recipeInfo.get(i).get(1));
-                String recipeIcon = MainActivity.recipeInfo.get(i).get(2);
-                Toast.makeText(HistoryActivity.this, Integer.toString(id), Toast.LENGTH_LONG).show();
+                String recipeIcon = MainActivity.recipeInfo.get(i).get(2).trim();
+                Toast.makeText(HistoryActivity.this, recipeIcon, Toast.LENGTH_LONG).show();
                 json_request(id);
 
             }
