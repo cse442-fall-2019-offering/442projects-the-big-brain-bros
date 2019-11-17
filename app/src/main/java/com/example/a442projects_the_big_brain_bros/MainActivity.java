@@ -36,12 +36,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
     public static final String apiKey = "2b590499522c4ac0a5cb4db5ef61b3bb";
+
+    public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,10 +103,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     public void open(){
+        readHistory();
+        Collections.reverse(recipeInfo);
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
+    public void readHistory(){
+        recipeInfo.clear();
+        ArrayList<String> title = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(MainActivity.HISTORY_FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+                String[] result = text.split(", ");
+                ArrayList<String> info = new ArrayList<>();
+                info.add(result[0]);
+                info.add(result[1]);
+                info.add(result[2]);
+                recipeInfo.add(info);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
+                try {
+                    fis.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        return recipeInfo;
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

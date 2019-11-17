@@ -36,12 +36,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class HistoryActivity extends Activity {
     public ListView listv;
     public static ArrayList<String> titleList = new ArrayList<>();
-    public static HashMap<String, ArrayList<String>> recipeInfo = new HashMap<>();
+
     private static JsonArrayRequest objectRequest;
     public static ArrayList<String> instruction = new ArrayList<>();
     public static ArrayList<String> ingredientList = new ArrayList<>();
@@ -52,7 +54,6 @@ public class HistoryActivity extends Activity {
         setContentView(R.layout.recipe_list);
         onRecipeClick();
         listv = (ListView) findViewById(R.id.listv);
-        readHistory();
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getTitleList());
         listv.setAdapter(arrayAdapter);
 
@@ -60,8 +61,8 @@ public class HistoryActivity extends Activity {
 
     public ArrayList<String> getTitleList() {
         titleList.clear();
-        for(String key : recipeInfo.keySet()){
-            titleList.add(key);
+        for(ArrayList<String> key : MainActivity.recipeInfo){
+            titleList.add(key.get(0));
         }
         return titleList;
     }
@@ -75,10 +76,12 @@ public class HistoryActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                title = titleList.get(i);
-                int id = Integer.parseInt(recipeInfo.get(title).get(0));
-                String recipeIcon = recipeInfo.get(title).get(1);
+                title = MainActivity.recipeInfo.get(i).get(0);
+                int id = Integer.parseInt(MainActivity.recipeInfo.get(i).get(1));
+                String recipeIcon = MainActivity.recipeInfo.get(i).get(2);
+                Toast.makeText(HistoryActivity.this, Integer.toString(id), Toast.LENGTH_LONG).show();
                 json_request(id);
+
             }
         });
     }
@@ -86,7 +89,7 @@ public class HistoryActivity extends Activity {
     //Starts the new activity RecipeActivity to display the recipe details.
     private void start_recipe_activity(JSONArray x){
 
-        Intent intent = new Intent (this, RecipeActivity.class);
+        Intent intent = new Intent (this, HistoryRecipeActivity.class);
         startActivity(intent);
     }
 
@@ -162,7 +165,7 @@ public class HistoryActivity extends Activity {
                 ArrayList<String> info = new ArrayList<>();
                 info.add(result[1]);
                 info.add(result[2]);
-                recipeInfo.put(result[0],info);
+//                MainActivity.recipeInfo.put(result[0],info);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
