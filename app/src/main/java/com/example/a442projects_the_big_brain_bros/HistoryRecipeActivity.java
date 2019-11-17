@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class RecipeActivity extends AppCompatActivity {
+public class HistoryRecipeActivity extends AppCompatActivity {
 
     //    public TextView textView = (TextView) findViewById(R.id.textV);
     @Override
@@ -21,21 +21,21 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_recipe);
         TextView textView = new TextView(this);
         textView.setTextSize(20);
-        String text = RecipeList.title +"\n\n"  + "Ingredients: \n";
+        String text = HistoryActivity.title +"\n\n"  + "Ingredients: \n";
 
-        for(int i = 0; i < RecipeList.ingredientList.size(); i++){
-            text += RecipeList.ingredientList.get(i) + "\n";
+        for(int i = 0; i < HistoryActivity.ingredientList.size(); i++){
+            text += HistoryActivity.ingredientList.get(i) + "\n";
         }
         text += "\n";
-        for(int i = 0; i < RecipeList.instruction.size(); i++){
-            text += "Step " + (i+1) + ")\n" +  RecipeList.instruction.get(i) + "\n\n";
+        for(int i = 0; i < HistoryActivity.instruction.size(); i++){
+            text += "Step " + (i+1) + ")\n" +  HistoryActivity.instruction.get(i) + "\n\n";
         }
         textView.setText(text);
         textView.setMovementMethod(new ScrollingMovementMethod());
         setContentView(textView);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
 

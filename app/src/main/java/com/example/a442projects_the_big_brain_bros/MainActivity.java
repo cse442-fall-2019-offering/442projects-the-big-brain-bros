@@ -40,7 +40,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
+    public static final String apiKey = "2b590499522c4ac0a5cb4db5ef61b3bb";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

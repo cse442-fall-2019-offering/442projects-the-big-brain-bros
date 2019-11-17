@@ -60,6 +60,10 @@
             >
         </activity>
         <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryRecipeActivity"
+            android:launchMode="standard"
+            android:parentActivityName=".RecipeList"
+            ></activity>
     </application>
 
 </manifest>
