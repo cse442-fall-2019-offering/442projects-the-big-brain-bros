@@ -71,7 +71,7 @@ public class RecipeActivity extends AppCompatActivity {
 
                     String title;
                     FileOutputStream fos = null;
-                    try {
+                    try{
                         fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
                         title = RecipeList.title;
                         fos.write(title.getBytes());  //write the text to the local storage
@@ -79,12 +79,12 @@ public class RecipeActivity extends AppCompatActivity {
                         fos = null;
 
                         Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
-                    } catch (FileNotFoundException e) {
+                    }catch (FileNotFoundException e){
                         e.printStackTrace();
-                    } catch (IOException e) {
+                    }catch (IOException e){
                         e.printStackTrace();
-                    } finally {
-                        if (fos != null) {
+                    }finally {
+                        if (fos != null){
                             try {
                                 fos.close();
                             } catch (IOException e) {
@@ -92,6 +92,7 @@ public class RecipeActivity extends AppCompatActivity {
                             }
                         }
                     }
+
                     mIsSaved = false;
                 } else {
 
@@ -103,9 +104,9 @@ public class RecipeActivity extends AppCompatActivity {
                         BufferedReader br = new BufferedReader(isr);
                         StringBuilder sb = new StringBuilder();
                         String text;
-                        while ((text = br.readLine()) != null) {
+                        while ((text = br.readLine()) != null){
                             sb.append(text).append("\n");
-                            if (!(text.equals(RecipeList.title)))
+                            if(!(text.equals(RecipeList.title)))
                                 title.add(text);
                         }
 
@@ -119,30 +120,36 @@ public class RecipeActivity extends AppCompatActivity {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } finally {
-                        if (fis != null) {
+                    }finally {
+                        if (fis != null){
                             try {
                                 fis.close();
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
+
+
                     }
 
+
+
                     FileOutputStream fos = null;
-                    try {
+                    try{
+
 
                         fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
                         String joinedTitle = String.join("\n", title);
                         fos.write(joinedTitle.getBytes());  //write the text to the local storage
                         fos = null;
                         Toast.makeText(getApplicationContext(), "Unsaved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
-                    } catch (FileNotFoundException e) {
+                    }catch (FileNotFoundException e){
                         e.printStackTrace();
-                    } catch (IOException e) {
+                    }catch (IOException e){
                         e.printStackTrace();
-                    } finally {
-                        if (fos != null) {
+                    }finally {
+                        if (fos != null){
                             try {
                                 fos.close();
                             } catch (IOException e) {
