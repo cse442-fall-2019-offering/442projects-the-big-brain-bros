@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private AppBarConfiguration mAppBarConfiguration;
     public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
-    public static final String apiKey = "2b590499522c4ac0a5cb4db5ef61b3bb";
+    public static final String apiKey = "d1e18c74e2b14ae58d071e26a1a140cf";
 
     public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Intent intent;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
         });
-
+    }
     public void openFavorites(){
         Intent intent = new Intent (this, FavoriteActivity.class);
         startActivity(intent);
