@@ -44,7 +44,7 @@ public class RecipeActivity extends AppCompatActivity {
         TextView instruction = (TextView) findViewById(R.id.textSL);
         text = "";
         for(int i = 0; i < RecipeList.instruction.size(); i++){
-            text += (i+1) + ". " +  RecipeList.instruction.get(i) + "\n\n";
+            text += "STEP " + (i+1) + ". \n\n" +  RecipeList.instruction.get(i) + "\n\n";
         }
         instruction.setText(text);
 
