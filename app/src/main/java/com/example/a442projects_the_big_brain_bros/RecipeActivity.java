@@ -70,9 +70,9 @@ public class RecipeActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setMovementMethod(new ScrollingMovementMethod());
         setContentView(textView);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
 
@@ -251,6 +251,5 @@ public class RecipeActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
-
 }
 
