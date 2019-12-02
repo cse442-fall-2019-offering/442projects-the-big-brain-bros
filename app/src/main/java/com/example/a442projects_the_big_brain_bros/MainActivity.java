@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private AppBarConfiguration mAppBarConfiguration;
     public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
-    public static final String FAVORITE_RECIEPE_FILE_NAME = "FAVORITE_RECIPIES.txt";
+    public static final String FAVORITE_RECIEPE_FILE_NAME = "FAVORITE_RECIPES.txt";
     public static final String apiKey = "d1e18c74e2b14ae58d071e26a1a140cf";
 
     public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> favRecipeInfo = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
     public void openFavorites(){
+        readFavorites();
+//        Collections.reverse(favRecipeInfo);
         Intent intent = new Intent (this, FavoriteActivity.class);
         startActivity(intent);
     }
@@ -150,6 +153,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 //        return recipeInfo;
     }
+    public void readFavorites(){
+        favRecipeInfo.clear();
+        ArrayList<String> title = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(MainActivity.FAVORITE_RECIEPE_FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+                String[] result = text.split(", ");
+                ArrayList<String> info = new ArrayList<>();
+                info.add(result[0]);
+                info.add(result[1]);
+                info.add(result[2]);
+                favRecipeInfo.add(info);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
+                try {
+                    fis.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        return recipeInfo;
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

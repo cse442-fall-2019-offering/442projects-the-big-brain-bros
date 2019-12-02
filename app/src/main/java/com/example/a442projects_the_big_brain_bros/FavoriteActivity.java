@@ -65,7 +65,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     public void getTitleList() {
         titleList.clear();
-        for(ArrayList<String> key : MainActivity.recipeInfo){
+        for(ArrayList<String> key : MainActivity.favRecipeInfo){
             titleList.add(key.get(0));
             recipeIcons.add(key.get(2));
 
@@ -81,9 +81,9 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                title = MainActivity.recipeInfo.get(i).get(0);
-                int id = Integer.parseInt(MainActivity.recipeInfo.get(i).get(1));
-                String recipeIcon = MainActivity.recipeInfo.get(i).get(2).trim();
+                title = MainActivity.favRecipeInfo.get(i).get(0);
+                int id = Integer.parseInt(MainActivity.favRecipeInfo.get(i).get(1));
+                String recipeIcon = MainActivity.favRecipeInfo.get(i).get(2).trim();
                 Toast.makeText(FavoriteActivity.this, recipeIcon, Toast.LENGTH_LONG).show();
                 json_request(id);
 
@@ -155,37 +155,5 @@ public class FavoriteActivity extends AppCompatActivity {
         requestQueue.add(objectRequest);
     }
 
-    public void readHistory(){
-        ArrayList<String> title = new ArrayList<>();
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(MainActivity.FAVORITE_RECIEPE_FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-            while ((text = br.readLine()) != null){
-                sb.append(text).append("\n");
-                String[] result = text.split(", ");
-                ArrayList<String> info = new ArrayList<>();
-                info.add(result[1]);
-                info.add(result[2]);
-//                MainActivity.recipeInfo.put(result[0],info);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if (fis != null){
-                try {
-                    fis.close();
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-//        return recipeInfo;
-    }
 }
