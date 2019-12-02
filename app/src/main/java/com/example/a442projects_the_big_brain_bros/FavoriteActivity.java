@@ -95,7 +95,7 @@ public class FavoriteActivity extends AppCompatActivity {
     //Starts the new activity RecipeActivity to display the recipe details.
     private void start_recipe_activity(JSONArray x){
 
-        Intent intent = new Intent (this, HistoryRecipeActivity.class);
+        Intent intent = new Intent (this, FavoriteRecipeActivity.class);
         startActivity(intent);
     }
 
