@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AppBarConfiguration mAppBarConfiguration;
     public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
     public static final String FAVORITE_RECIEPE_FILE_NAME = "FAVORITE_RECIPES.txt";
-    public static final String apiKey = "d1e18c74e2b14ae58d071e26a1a140cf";
+    public static final String apiKey = "43c453d012a143b192a357ccc2d7a4f5";
 
     public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
     public static ArrayList<ArrayList<String>> favRecipeInfo = new ArrayList<>();
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void openFavorites(){
         readFavorites();
-//        Collections.reverse(favRecipeInfo);
+        Collections.reverse(favRecipeInfo);
         Intent intent = new Intent (this, FavoriteActivity.class);
         startActivity(intent);
     }

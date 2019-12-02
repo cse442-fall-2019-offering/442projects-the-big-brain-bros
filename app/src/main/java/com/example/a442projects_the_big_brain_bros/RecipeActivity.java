@@ -27,6 +27,7 @@ public class RecipeActivity extends AppCompatActivity {
     public static String title;
     public static String recipeIcon;
     //    public TextView textView = (TextView) findViewById(R.id.textV);
+    public static ArrayList<String> titles = new ArrayList<>();
     @Override
 
     //onCreate passed in the parsed JSONarray.  The details are then displayed onto the new activity(Recipe title, Recipe Ingredients, Recipe instructions).
@@ -63,12 +64,8 @@ public class RecipeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // handle button activities
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        boolean result = true;
-        ArrayList<String> titles = new ArrayList<>();
+    public void readFile(){
+        titles.clear();
         FileInputStream fis = null;
         try {
             title = RecipeList.title;
@@ -85,13 +82,10 @@ public class RecipeActivity extends AppCompatActivity {
 //                if(!(text.equals(recipeInfo)))
                 titles.add(text);
             }
-
             isr = null;
             br = null;
             sb = null;
             fis = null;
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -106,8 +100,13 @@ public class RecipeActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-
+        boolean result = true;
+        readFile();
         switch (item.getItemId()) {
             case R.id.save_button:
                 if (mIsSaved) { //you could modify this to check the icon/text of the menu item
@@ -146,9 +145,8 @@ public class RecipeActivity extends AppCompatActivity {
 
                     FileOutputStream fos = null;
                     try{
-
-
-                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
+                        readFile();
+                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_PRIVATE);
                         titles.remove(RecipeList.title);
                         String joinedTitle = String.join("\n", titles);
                         fos.write(joinedTitle.getBytes());  //write the text to the local storage

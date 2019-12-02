@@ -31,17 +31,17 @@ public class HistoryRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_recipe);
         TextView textView = new TextView(this);
         TextView title = (TextView) findViewById(R.id.textT);
-        title.setText(RecipeList.title + "\n");
+        title.setText(HistoryActivity.title + "\n");
         String text = "";
         TextView ingredients = (TextView) findViewById(R.id.textIL);
-        for(int i = 0; i < RecipeList.ingredientList.size(); i++){
-            text += RecipeList.ingredientList.get(i) + "\n";
+        for(int i = 0; i < HistoryActivity.ingredientList.size(); i++){
+            text += HistoryActivity.ingredientList.get(i) + "\n";
         }
         ingredients.setText(text + "\n");
         TextView instruction = (TextView) findViewById(R.id.textSL);
         text = "";
-        for(int i = 0; i < RecipeList.instruction.size(); i++){
-            text += "STEP " + (i+1) + ". \n\n" +  RecipeList.instruction.get(i) + "\n\n";
+        for(int i = 0; i < HistoryActivity.instruction.size(); i++){
+            text += "STEP " + (i+1) + ". \n\n" +  HistoryActivity.instruction.get(i) + "\n\n";
         }
         instruction.setText(text);
 
@@ -71,7 +71,7 @@ public class HistoryRecipeActivity extends AppCompatActivity {
                     FileOutputStream fos = null;
                     try{
                         fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
-                        title = RecipeList.title;
+                        title = HistoryActivity.title;
                         fos.write(title.getBytes());  //write the text to the local storage
 
                         fos = null;
@@ -104,7 +104,7 @@ public class HistoryRecipeActivity extends AppCompatActivity {
                         String text;
                         while ((text = br.readLine()) != null){
                             sb.append(text).append("\n");
-                            if(!(text.equals(RecipeList.title)))
+                            if(!(text.equals(HistoryActivity.title)))
                                 title.add(text);
                         }
 

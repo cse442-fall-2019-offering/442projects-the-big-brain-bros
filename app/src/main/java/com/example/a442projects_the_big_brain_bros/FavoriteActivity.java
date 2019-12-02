@@ -65,6 +65,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     public void getTitleList() {
         titleList.clear();
+        recipeIcons.clear();
         for(ArrayList<String> key : MainActivity.favRecipeInfo){
             titleList.add(key.get(0));
             recipeIcons.add(key.get(2));
@@ -75,7 +76,7 @@ public class FavoriteActivity extends AppCompatActivity {
     private void onRecipeClick(){
         ListView listView = (ListView) findViewById(R.id.listv);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
