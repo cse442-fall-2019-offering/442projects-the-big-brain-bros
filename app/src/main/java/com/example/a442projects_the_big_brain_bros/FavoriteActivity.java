@@ -75,7 +75,7 @@ public class FavoriteActivity extends AppCompatActivity {
     private void onRecipeClick(){
         ListView listView = (ListView) findViewById(R.id.listv);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
