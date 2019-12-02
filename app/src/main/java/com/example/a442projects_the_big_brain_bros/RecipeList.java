@@ -53,7 +53,8 @@ public class RecipeList extends AppCompatActivity {
     public static String title;
     public static ArrayList<String> ingredientList = new ArrayList<>();
     public ListView listv;
-
+    public static String recipeIcon;
+    public static int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +146,8 @@ public class RecipeList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 title = SearchActivity.titleList.get(i);
-                String recipeIcon = SearchActivity.recipeIcons.get(i);
-                int id = SearchActivity.recipeName.get(title);
+                recipeIcon = SearchActivity.recipeIcons.get(i);
+                id = SearchActivity.recipeName.get(title);
                 FileOutputStream fos = null;
                 try {
                     fos = openFileOutput(MainActivity.HISTORY_FILE_NAME, MODE_APPEND);

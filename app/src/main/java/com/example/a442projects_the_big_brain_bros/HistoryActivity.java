@@ -54,10 +54,11 @@ public class HistoryActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        onRecipeClick();
+
         listv = (ListView) findViewById(R.id.listv);
 //        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getTitleList());
         getTitleList();
+        onRecipeClick();
         ListViewAdapter adapter = new ListViewAdapter(this, titleList, recipeIcons);
         listv.setAdapter(adapter);
 
@@ -65,6 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     public void getTitleList() {
         titleList.clear();
+        recipeIcons.clear();
         for(ArrayList<String> key : MainActivity.recipeInfo){
             titleList.add(key.get(0));
             recipeIcons.add(key.get(2));
@@ -74,7 +76,6 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void onRecipeClick(){
         ListView listView = (ListView) findViewById(R.id.listv);
-
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,7 +85,7 @@ public class HistoryActivity extends AppCompatActivity {
                 title = MainActivity.recipeInfo.get(i).get(0);
                 int id = Integer.parseInt(MainActivity.recipeInfo.get(i).get(1));
                 String recipeIcon = MainActivity.recipeInfo.get(i).get(2).trim();
-                Toast.makeText(HistoryActivity.this, recipeIcon, Toast.LENGTH_LONG).show();
+                Toast.makeText(HistoryActivity.this, title, Toast.LENGTH_LONG).show();
                 json_request(id);
 
             }
