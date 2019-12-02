@@ -24,7 +24,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     boolean mIsSaved = true;
 
-
+    public static String title;
+    public static String recipeIcon;
     //    public TextView textView = (TextView) findViewById(R.id.textV);
     @Override
 
@@ -65,21 +66,67 @@ public class RecipeActivity extends AppCompatActivity {
     // handle button activities
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         boolean result = true;
+        ArrayList<String> titles = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            title = RecipeList.title;
+            recipeIcon = RecipeList.recipeIcon;
+            int id = RecipeList.id;
+            String recipeInfo = title + ", " + Integer.toString(id) + ", " + recipeIcon + "\n";
+            fis = openFileInput("FAVORITE_RECIPES.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+//                if(!(text.equals(recipeInfo)))
+                titles.add(text);
+            }
+
+            isr = null;
+            br = null;
+            sb = null;
+            fis = null;
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
+                try {
+                    fis.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
         switch (item.getItemId()) {
             case R.id.save_button:
                 if (mIsSaved) { //you could modify this to check the icon/text of the menu item
 
-                    String title;
+                    title = RecipeList.title;
+                    recipeIcon = RecipeList.recipeIcon;
+                    int id = RecipeList.id;
+
                     FileOutputStream fos = null;
                     try{
-                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
-                        title = RecipeList.title;
-                        fos.write(title.getBytes());  //write the text to the local storage
+                        String recipeInfo = title + ", " + Integer.toString(id) + ", " + recipeIcon + "\n";
+                        if(!titles.contains(recipeInfo)) {
+                            fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
 
-                        fos = null;
 
-                        Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
+                            fos.write(recipeInfo.getBytes());
+                            Toast.makeText(getApplicationContext(), recipeInfo, Toast.LENGTH_LONG).show();
+                        }
+
                     }catch (FileNotFoundException e){
                         e.printStackTrace();
                     }catch (IOException e){
@@ -97,53 +144,14 @@ public class RecipeActivity extends AppCompatActivity {
                     mIsSaved = false;
                 } else {
 
-                    ArrayList<String> title = new ArrayList<>();
-                    FileInputStream fis = null;
-                    try {
-                        fis = openFileInput("FAVORITE_RECIPES.txt");
-                        InputStreamReader isr = new InputStreamReader(fis);
-                        BufferedReader br = new BufferedReader(isr);
-                        StringBuilder sb = new StringBuilder();
-                        String text;
-                        while ((text = br.readLine()) != null){
-                            sb.append(text).append("\n");
-                            if(!(text.equals(RecipeList.title)))
-                                title.add(text);
-                        }
-
-                        isr = null;
-                        br = null;
-                        sb = null;
-                        fis = null;
-
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }finally {
-                        if (fis != null){
-                            try {
-                                fis.close();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                    }
-
-
-
                     FileOutputStream fos = null;
                     try{
 
 
                         fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
-                        String joinedTitle = String.join("\n", title);
+                        titles.remove(RecipeList.title);
+                        String joinedTitle = String.join("\n", titles);
                         fos.write(joinedTitle.getBytes());  //write the text to the local storage
-                        fos = null;
                         Toast.makeText(getApplicationContext(), "Unsaved to" + getFilesDir() + "/" + "FAVORITE_RECIPES", Toast.LENGTH_LONG).show();
                     }catch (FileNotFoundException e){
                         e.printStackTrace();
