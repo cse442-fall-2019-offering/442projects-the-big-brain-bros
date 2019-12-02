@@ -28,12 +28,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
+    public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
+    public static final String FAVORITE_RECIEPE_FILE_NAME = "FAVORITE_RECIPES.txt";
+    public static final String apiKey = "43c453d012a143b192a357ccc2d7a4f5";
 
-
+    public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> favRecipeInfo = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +81,126 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Intent intent;
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
+                    case R.id.nav_gallery:
+                        openFavorites();
 
+                        break;
+                    case R.id.nav_signup:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
+
+                        break;
+                    case R.id.nav_slideshow:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HistoryFragment()).commit();
+                        open();
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+    public void openFavorites(){
+        readFavorites();
+        Collections.reverse(favRecipeInfo);
+        Intent intent = new Intent (this, FavoriteActivity.class);
+        startActivity(intent);
+    }
+    public void open(){
+        readHistory();
+        Collections.reverse(recipeInfo);
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void readHistory(){
+        recipeInfo.clear();
+        ArrayList<String> title = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(MainActivity.HISTORY_FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+                String[] result = text.split(", ");
+                ArrayList<String> info = new ArrayList<>();
+                info.add(result[0]);
+                info.add(result[1]);
+                info.add(result[2]);
+                recipeInfo.add(info);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
+                try {
+                    fis.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        return recipeInfo;
+    }
+    public void readFavorites(){
+        favRecipeInfo.clear();
+        ArrayList<String> title = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(MainActivity.FAVORITE_RECIEPE_FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+                String[] result = text.split(", ");
+                ArrayList<String> info = new ArrayList<>();
+                info.add(result[0]);
+                info.add(result[1]);
+                info.add(result[2]);
+                favRecipeInfo.add(info);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
+                try {
+                    fis.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        return recipeInfo;
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.login_layout, new LoginFragment()).commit();
 
                 break;
             case R.id.nav_signup:
-                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.registerlayout, new RegisterFragment()).commit();
 
+                break;
+            case R.id.nav_slideshow:
                 break;
         }
         return true;
@@ -94,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Method for the Login button when clicked, this method is invoked (See button layout in fragment_home.xml
     public void on_login_click(View view){
         Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+        startActivity(intent);
 
     }
 

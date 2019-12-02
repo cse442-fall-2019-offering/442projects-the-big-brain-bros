@@ -59,6 +59,16 @@
             android:parentActivityName=".RecipeList"
             >
         </activity>
+        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryRecipeActivity"
+            android:launchMode="standard"
+            android:parentActivityName=".RecipeList"
+            ></activity>
+        <activity android:name=".FavoriteActivity" ></activity>
+        <activity android:name=".FavoriteRecipeActivity"
+            android:launchMode="standard"
+            android:parentActivityName=".RecipeList"
+            ></activity>
     </application>
 
 </manifest>

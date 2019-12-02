@@ -10,12 +10,52 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/textV"
+            android:id="@+id/textT"
+            android:textColor="#010203"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:textSize="30sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars = "vertical"
-            >
-        </TextView>
+            android:scrollbars = "vertical" />
+        <TextView
+            android:id="@+id/textI"
+            android:textColor="#87cefa"
+            android:text="@string/ingredients"
+            android:textAllCaps="true"
+            android:textSize="22sp"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars = "vertical" />
+        <TextView
+            android:id="@+id/textIL"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textColor="#2E2827"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars = "vertical" />
+        <TextView
+            android:id="@+id/textS"
+            android:text="@string/directions"
+            android:textColor="#87cefa"
+            android:textAllCaps="true"
+            android:textSize="22sp"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars = "vertical" />
+        <TextView
+            android:id="@+id/textSL"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textColor="#2E2827"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars = "vertical" />
     </LinearLayout>
 
 </ScrollView>

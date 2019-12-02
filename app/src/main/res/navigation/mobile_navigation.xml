@@ -13,15 +13,15 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.a442projects_the_big_brain_bros.ui.gallery.GalleryFragment"
+        android:name="com.example.a442projects_the_big_brain_bros.ui.gallery.FavoritesFragment"
         android:label="@string/Favorites"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.a442projects_the_big_brain_bros.ui.slideshow.SlideshowFragment"
+        android:name="com.example.a442projects_the_big_brain_bros.ui.slideshow.HistoryFragment"
         android:label="@string/Historyt"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/nav_tools"

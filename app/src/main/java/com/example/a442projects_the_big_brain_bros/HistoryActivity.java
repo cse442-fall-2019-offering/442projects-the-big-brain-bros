@@ -1,11 +1,8 @@
 package com.example.a442projects_the_big_brain_bros;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -26,7 +25,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,46 +37,68 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
-public class RecipeList extends AppCompatActivity {
-
-    public ArrayList<String> dishes;
-    private ArrayAdapter<String> adapter;
-
-    private static JsonArrayRequest objectRequest;
-    public static ArrayList jsonText;
-    public static ArrayList<String> instruction = new ArrayList<>();
-    public static String title;
-    public static ArrayList<String> ingredientList = new ArrayList<>();
+public class HistoryActivity extends AppCompatActivity {
     public ListView listv;
-    public static String recipeIcon;
-    public static int id;
+    public static ArrayList<String> titleList = new ArrayList<>();
+    public static ArrayList<String> recipeIcons =  new ArrayList<>();
+    private static JsonArrayRequest objectRequest;
+    public static ArrayList<String> instruction = new ArrayList<>();
+    public static ArrayList<String> ingredientList = new ArrayList<>();
+    public static String title;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        update_view();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         listv = (ListView) findViewById(R.id.listv);
-        ListViewAdapter adapter = new ListViewAdapter(this, SearchActivity.titleList, SearchActivity.recipeIcons);
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getTitleList());
+        getTitleList();
+        onRecipeClick();
+        ListViewAdapter adapter = new ListViewAdapter(this, titleList, recipeIcons);
         listv.setAdapter(adapter);
 
-
     }
+
+    public void getTitleList() {
+        titleList.clear();
+        recipeIcons.clear();
+        for(ArrayList<String> key : MainActivity.recipeInfo){
+            titleList.add(key.get(0));
+            recipeIcons.add(key.get(2));
+
+        }
+    }
+
+    private void onRecipeClick(){
+        ListView listView = (ListView) findViewById(R.id.listv);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                title = MainActivity.recipeInfo.get(i).get(0);
+                int id = Integer.parseInt(MainActivity.recipeInfo.get(i).get(1));
+                String recipeIcon = MainActivity.recipeInfo.get(i).get(2).trim();
+                Toast.makeText(HistoryActivity.this, title, Toast.LENGTH_LONG).show();
+                json_request(id);
+
+            }
+        });
+    }
+
     //Starts the new activity RecipeActivity to display the recipe details.
     private void start_recipe_activity(JSONArray x){
 
-        Intent intent = new Intent (this, RecipeActivity.class);
+        Intent intent = new Intent (this, HistoryRecipeActivity.class);
         startActivity(intent);
     }
 
-    //This method calls spoonacular api with the recipe title id to get instructions in the form of a JSONArray.
-    //Parses through the JSON to get the Recipe title, Recipe Ingredients, and Recipe Instructions.  After parsing the JSONArray
-    //It calls "startRecipeActivity" and passes in the parsed JSONarray.
     private void json_request(int id){
         String URL = "https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions" + "?apiKey=" + MainActivity.apiKey;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -136,47 +156,37 @@ public class RecipeList extends AppCompatActivity {
         requestQueue.add(objectRequest);
     }
 
-    //Updates listview to display titles of recipes.  Listview onClick calls the method jsonRequest and passes in the id# of the recipe.
-    private void update_view() {
-        ListView listView = (ListView) findViewById(R.id.listv);
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, SearchActivity.titleList);
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                title = SearchActivity.titleList.get(i);
-                recipeIcon = SearchActivity.recipeIcons.get(i);
-                id = SearchActivity.recipeName.get(title);
-                FileOutputStream fos = null;
+    public void readHistory(){
+        ArrayList<String> title = new ArrayList<>();
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(MainActivity.HISTORY_FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+                String[] result = text.split(", ");
+                ArrayList<String> info = new ArrayList<>();
+                info.add(result[1]);
+                info.add(result[2]);
+//                MainActivity.recipeInfo.put(result[0],info);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fis != null){
                 try {
-                    fos = openFileOutput(MainActivity.HISTORY_FILE_NAME, MODE_APPEND);
+                    fis.close();
 
-                    String recipeInfo = title + ", " + Integer.toString(id) + ", " + recipeIcon + "\n";
-                    fos.write(recipeInfo.getBytes());
-                    Toast.makeText(getApplicationContext(), recipeInfo, Toast.LENGTH_LONG).show();
-                    //Print File Save Feedback
-//                    Toast.makeText(getApplicationContext(), "Saved to" + getFilesDir() + "/" + MainActivity., Toast.LENGTH_LONG).show();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
-                    if (fos != null){
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }
-                json_request(id);
             }
-        });
+        }
+//        return recipeInfo;
     }
-
 }
-
-
-
-
