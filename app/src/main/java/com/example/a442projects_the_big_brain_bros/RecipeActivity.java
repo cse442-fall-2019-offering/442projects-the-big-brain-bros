@@ -119,12 +119,13 @@ public class RecipeActivity extends AppCompatActivity {
                     FileOutputStream fos = null;
                     try{
                         String recipeInfo = title + ", " + Integer.toString(id) + ", " + recipeIcon + "\n";
-                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
+                        if(!titles.contains(recipeInfo)) {
+                            fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
 
 
-                        fos.write(recipeInfo.getBytes());
-                        Toast.makeText(getApplicationContext(), recipeInfo, Toast.LENGTH_LONG).show();
-
+                            fos.write(recipeInfo.getBytes());
+                            Toast.makeText(getApplicationContext(), recipeInfo, Toast.LENGTH_LONG).show();
+                        }
 
                     }catch (FileNotFoundException e){
                         e.printStackTrace();
@@ -147,7 +148,7 @@ public class RecipeActivity extends AppCompatActivity {
                     try{
 
 
-                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_PRIVATE);
+                        fos = openFileOutput("FAVORITE_RECIPES.txt", MODE_APPEND);
                         titles.remove(RecipeList.title);
                         String joinedTitle = String.join("\n", titles);
                         fos.write(joinedTitle.getBytes());  //write the text to the local storage
