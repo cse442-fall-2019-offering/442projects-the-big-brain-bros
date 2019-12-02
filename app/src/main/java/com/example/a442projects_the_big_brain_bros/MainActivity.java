@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private AppBarConfiguration mAppBarConfiguration;
     public static final String HISTORY_FILE_NAME = "Recipe_History.txt";
+    public static final String FAVORITE_RECIEPE_FILE_NAME = "FAVORITE_RECIPIES.txt";
     public static final String apiKey = "d1e18c74e2b14ae58d071e26a1a140cf";
 
     public static ArrayList<ArrayList<String>> recipeInfo = new ArrayList<>();
